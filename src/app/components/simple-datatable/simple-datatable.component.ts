@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { EPerson } from '../../shared/interfaces/eperson';
+import { sortBy } from 'lodash-es'
 
 @Component({
   selector: 'app-simple-datatable',
@@ -9,4 +10,16 @@ import { EPerson } from '../../shared/interfaces/eperson';
 })
 export class SimpleDatatableComponent {
     @Input() data: EPerson[] | undefined
+
+    sortOrder = {
+        givenName: 'none',
+        surname: 'none',
+        age: 'none',
+        email: 'none',
+        education: 'none'
+    }
+
+    onPersonClicked(person: EPerson) {
+        console.log(person)
+    }
 }

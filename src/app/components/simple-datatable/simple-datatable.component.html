@@ -1,16 +1,16 @@
 <table class="table table-bordered table-striped text-wrap">
     <thead>
         <tr class="align-middle text-center small">
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Age</th>
-            <th>Email</th>
-            <th>Education</th>
+            <th role="button" (click)="sortData('givenName')">First Name</th>
+            <th role="button" (click)="sortData('surname')">Last Name</th>
+            <th role="button" (click)="sortData('age')">Age</th>
+            <th role="button" (click)="sortData('email')">Email</th>
+            <th role="button" (click)="sortData('education')">Education</th>
         </tr>
     </thead>
     <tbody>
         @for (row of data; track row) {
-            <tr class="align-middle">
+            <tr class="align-middle" (dblclick)="onPersonClicked(row)">
                 <td> {{row.givenName}} </td>
                 <td> {{row.surname}} </td>
                 <td> {{row.age}} </td>
