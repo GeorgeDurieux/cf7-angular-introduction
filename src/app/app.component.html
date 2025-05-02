@@ -8,6 +8,8 @@
     </div>
 </div>
 
+<app-event-bind-example></app-event-bind-example>
+
 <div class="container mt-4">
     <p>Hello <strong>{{ name }}</strong></p>
 </div>
@@ -33,4 +35,13 @@
 
 <div class="d-flex gap-5 text-nowrap">
     <app-person-table></app-person-table>
+    <app-person-table [personInput]="person0"></app-person-table>
+    <app-person-table [personInput]="person1"></app-person-table>
+</div>
+
+<h4> {{"@for"}} Directive example </h4>
+<div class="d-flex flex-wrap text-nowrap gap-2">
+    @for (user of users; track user) {
+        <app-person-table [personInput] = "user"></app-person-table>
+    }
 </div>
