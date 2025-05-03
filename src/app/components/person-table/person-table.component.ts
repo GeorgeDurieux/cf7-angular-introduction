@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Person } from '../../shared/interfaces/person';
+import { EPerson } from '../../shared/interfaces/eperson';
 
 @Component({
   selector: 'app-person-table',
