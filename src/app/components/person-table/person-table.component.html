@@ -1,6 +1,6 @@
 <div>
     <table class="table table-bordered w-50">
-        <caption>Person details</caption>
+        <h4>Person details</h4>
         <tr>
             <td class="fw-semibold text-end">First Name</td>
             <td class="ps-2">{{ personInput?.givenName }}</td>
@@ -18,7 +18,7 @@
             <td class="ps-2">{{ personInput?.email }}</td>
         </tr>
             <tr>
-                <td class="fw-semibold text-end"> {{ isPerson() ? 'Address' : 'Education' }} </td>
+                <td class="fw-semibold text-end"> {{ isPerson() ? 'Address' : isEPerson() ? 'Education' : '' }} </td>
                 <td class="ps-2">{{ addressOrEducation }}</td>
             </tr>     
     </table>

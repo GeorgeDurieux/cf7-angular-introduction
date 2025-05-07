@@ -4,10 +4,10 @@ import { SimpleDatatableComponent } from '../simple-datatable/simple-datatable.c
 import { Dialog, DialogRef, DIALOG_DATA, DialogModule } from '@angular/cdk/dialog'
 
 @Component({
-  selector: 'app-component-output-example',
-  imports: [SimpleDatatableComponent, DialogModule],
-  templateUrl: './component-output-example.component.html',
-  styleUrl: './component-output-example.component.css'
+    selector: 'app-component-output-example',
+    imports: [SimpleDatatableComponent, DialogModule],
+    templateUrl: './component-output-example.component.html',
+    styleUrl: './component-output-example.component.css'
 })
 export class ComponentOutputExampleComponent {
     manyPerson = ManyPerson
@@ -21,7 +21,7 @@ export class ComponentOutputExampleComponent {
 
     personTemplate(person: EPerson) {
         return `
-        Person Details
+        Person Details:
 
         First Name: ${person.givenName}
         Last Name: ${person.surname}
@@ -35,30 +35,37 @@ export class ComponentOutputExampleComponent {
 @Component({
     imports: [],
     template: `
-    <table class="table table-bordered w-50">
-        <caption>Person details</caption>
-        <tr>
-            <td class="fw-semibold text-end">First Name</td>
-            <td class="ps-2">{{ person.givenName }}</td>
-        </tr>
-        <tr>
-            <td class="fw-semibold text-end">Last Name</td>
-            <td class="ps-2">{{ person.surname }}</td>
-        </tr>
-        <tr>
-            <td class="fw-semibold text-end">Age</td>
-            <td class="ps-2">{{ person.age }}</td>
-        </tr>
-        <tr>
-            <td class="fw-semibold text-end">Email</td>
-            <td class="ps-2">{{ person.email }}</td>
-        </tr>
-        <tr>
-            <td class="fw-semibold text-end">Education</td>
-            <td class="ps-2">{{ person.education }}</td>
-        </tr>
+    <div class="d-flex flex-column align-items-center justify-content-center text-center">
+
+    <h4 class="mb-3">Person details</h4>
+
+    <table class="table table-bordered mx-3">
+    <tr>
+        <td class="fw-semibold text-end">First Name</td>
+        <td class="ps-2 text-start">{{ person.givenName }}</td>
+    </tr>
+    <tr>
+        <td class="fw-semibold text-end">Last Name</td>
+        <td class="ps-2 text-start">{{ person.surname }}</td>
+    </tr>
+    <tr>
+        <td class="fw-semibold text-end">Age</td>
+        <td class="ps-2 text-start">{{ person.age }}</td>
+    </tr>
+    <tr>
+        <td class="fw-semibold text-end">Email</td>
+        <td class="ps-2 text-start">{{ person.email }}</td>
+    </tr>
+    <tr>
+        <td class="fw-semibold text-end">Education</td>
+        <td class="ps-2 text-start">{{ person.education }}</td>
+    </tr>
     </table>
-    <button class="btn btn-primary btn-sm" (click)="dialogRef.close()">Close</button>
+
+    <button class="btn btn-primary btn-sm mt-3" (click)="dialogRef.close()">Close</button>
+
+</div>
+
     `,
     styles: [
         `
@@ -77,5 +84,5 @@ export class PersonDialogComponent {
     dialogRef = inject(DialogRef)
     constructor(
         @Inject(DIALOG_DATA) public person: EPerson
-    ){}    
+    ) { }
 }
