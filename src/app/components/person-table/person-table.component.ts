@@ -10,15 +10,7 @@ import { EPerson } from '../../shared/interfaces/eperson';
 })
 export class PersonTableComponent {
     @Input() personInput: Person | EPerson | undefined
-    name = 'Thanasis'
     addressOrEducation: string = ''
-
-    person = {
-        givenName: 'Thanasis',
-        surname: 'Androutsos',
-        age: '50',
-        email: 'a8ana@aueb.gr'
-    }
 
     isPerson(): boolean {
         if (this.personInput && 'address' in this.personInput) {
