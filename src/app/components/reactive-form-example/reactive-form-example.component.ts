@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { PersonTableComponent } from '../person-table/person-table.component';
 import { SimpleDatatableComponent } from '../simple-datatable/simple-datatable.component';
 import { EpersonReactiveFormComponent } from '../eperson-reactive-form/eperson-reactive-form.component';
@@ -16,7 +16,7 @@ export class ReactiveFormExampleComponent {
 
     onPerson(data: EPerson) {
         this.currentPerson = data
-        this.persons.push(data)
+        this.persons = [...this.persons, this.currentPerson]
     }
 
 }

@@ -21,7 +21,7 @@ export class TemplateDrivenFormExampleComponent {
     }
 
     onPerson(data: EPerson) {
-        this.persons.push(data)
         this.currentPerson = data
+        this.persons = [...this.persons, this.currentPerson]
     }
 }

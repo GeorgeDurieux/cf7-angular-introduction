@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges, effect, inject } from '@angular/core';
 import { EPerson } from '../../shared/interfaces/eperson';
 import { sortBy } from 'lodash-es'
 
@@ -8,9 +8,11 @@ import { sortBy } from 'lodash-es'
   templateUrl: './simple-datatable.component.html',
   styleUrl: './simple-datatable.component.css'
 })
-export class SimpleDatatableComponent {
+export class SimpleDatatableComponent implements OnChanges {
     @Input() data: EPerson[] | undefined
     @Output() personClicked = new EventEmitter<EPerson>()
+
+    epersonsData: EPerson[] | undefined = []
 
     sortOrder = {
         givenName: 'none',
@@ -20,13 +22,17 @@ export class SimpleDatatableComponent {
         education: 'none'
     }
 
+    ngOnChanges() {
+        this.epersonsData = this.data
+    }
+
     sortData(sortKey: keyof EPerson): void {
         if (this.sortOrder[sortKey] === 'asc') {
             this.sortOrder[sortKey] = 'desc'
-            this.data = sortBy(this.data, sortKey).reverse()
+            this.epersonsData = sortBy(this.epersonsData, sortKey).reverse()
         } else {
             this.sortOrder[sortKey] = 'asc'
-            this.data = sortBy(this.data, sortKey)
+            this.epersonsData = sortBy(this.epersonsData, sortKey)
         }
 
         for (let key in this.sortOrder) {
@@ -47,7 +53,6 @@ export class SimpleDatatableComponent {
     }
 
     onPersonClicked(person: EPerson) {
-        console.log(person)
         this.personClicked.emit(person)
     }
 }
