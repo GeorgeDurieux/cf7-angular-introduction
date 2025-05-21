@@ -1,55 +1,75 @@
 <h4>User Registration Example</h4>
 
 <div class="d-flex flex-column mt-2 w-50">
-    <form class="d-flex flex-column">
+    <form [formGroup]="form" class="d-flex flex-column">
 
         <mat-form-field>
             <mat-label>Username</mat-label>
-            <input matInput type="text">
+            <input matInput type="text" formControlName="username">
             <mat-error>Username is required</mat-error>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>First Name</mat-label>
-            <input matInput type="text">
+            <input matInput type="text" formControlName="name">
             <mat-error>First Name is required</mat-error>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Lastname</mat-label>
-            <input matInput type="text">
+            <input matInput type="text" formControlName="surname">
             <mat-error>Last Name is required</mat-error>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Email</mat-label>
-            <input matInput type="text">
+            <input matInput type="text" formControlName="email">
             <mat-error>Email is missing or invalid</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Area</mat-label>
-            <input matInput type="text">
-        </mat-form-field>
+        <div class="d-flex gap-2" formGroupName="address">
 
-        <mat-form-field>
-            <mat-label>Road</mat-label>
-            <input matInput type="text">
-        </mat-form-field>
+            <mat-form-field>
+                <mat-label>Area</mat-label>
+                <input matInput type="text" formControlName="area">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Road</mat-label>
+                <input matInput type="text" formControlName="road">
+            </mat-form-field>
+
+        </div>
 
         <mat-form-field>
             <mat-label>Password</mat-label>
-            <input matInput type="password">
-            <mat-error>Password is missing or invalid</mat-error>
+            <input matInput type="password" formControlName="password">
+            @if(form.get('password')?.invalid && form.get('password')?.touched) {
+                <mat-error>Invalid</mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Confirm Password</mat-label>
-            <input matInput type="password">
-            <mat-error>Confirm Password is missing or invalid</mat-error>
+            <input matInput type="password" formControlName="confirmPassword">
+
+            
+            @if(form.get('confirmPassword')?.invalid && form.get('confirmPassword')?.touched) {
+                <mat-error>Password is invalid or missing</mat-error>
+            } @else {
+                @if(form.get('confirmPassword')?.hasError('passwordMismatch')) {
+                <mat-error>Passwords do not match</mat-error>
+                }
+            }
         </mat-form-field>
 
-        <button mat-flat-button>Register</button>
+        <button
+         mat-flat-button
+         [disabled]="form.invalid" 
+         (click)="onSubmit()"
+         >
+            Register
+        </button>
     </form>
 </div>
 
