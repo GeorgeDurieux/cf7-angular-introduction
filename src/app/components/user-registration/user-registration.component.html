@@ -29,10 +29,9 @@
                 
                 @if(form.get('email')?.hasError('duplicateEmail')) {
                     <mat-error>Email is already registered</mat-error>
-                } @else {
-                    @if(form.get('email')?.invalid && form.get('email')?.touched) {
-                        <mat-error>Email is missing or invalid</mat-error>
-                    }
+                } @else if (form.get('email')?.invalid && form.get('email')?.touched) {
+                    <mat-error>Email is missing or invalid</mat-error>
+                
                 }
             </mat-form-field>
 
@@ -65,10 +64,8 @@
                 
                 @if(form.get('confirmPassword')?.invalid && form.get('confirmPassword')?.touched) {
                     <mat-error>Password is invalid or missing</mat-error>
-                } @else {
-                    @if(form.get('confirmPassword')?.hasError('passwordMismatch')) {
-                    <mat-error>Passwords do not match</mat-error>
-                    }
+                } @else if (form.get('confirmPassword')?.hasError('passwordMismatch')) {
+                    <mat-error>Passwords do not match</mat-error>    
                 }
             </mat-form-field>
 

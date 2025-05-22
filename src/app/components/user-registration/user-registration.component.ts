@@ -18,7 +18,6 @@ import { User } from '../../shared/interfaces/user';
 })
 export class UserRegistrationComponent {
     userService = inject(UserService)
-    emailErrorMessage = signal('')
 
     registrationStatus: {
         success: boolean,
@@ -64,8 +63,8 @@ export class UserRegistrationComponent {
             'surname': this.form.get('surname')?.value || '',
             'email': this.form.get('email')?.value || '',
             'address': {
-                'area': this.form.get('area')?.value || '',
-                'road': this.form.get('road')?.value || ''
+                'area': this.form.controls.address.controls.area?.value || '',
+                'road': this.form.controls.address.controls.road?.value || ''
             }
         }
         this.userService.registerUser(data).subscribe({
@@ -78,7 +77,7 @@ export class UserRegistrationComponent {
             error: (response) => {
                 this.registrationStatus = {
                     success: false,
-                    message: response.data
+                    message: response.error.data.errorResponse.errmsg
                 }
             }
         })
