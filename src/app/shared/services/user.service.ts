@@ -17,4 +17,8 @@ export class UserService {
             `${API_URL}`, user
         )
     }
+
+    check_duplicate_email(email: string) {
+        return this.http.get<{status: boolean, data: User}>(`${API_URL}/check_duplicate_email/${email}`)
+    }
 }

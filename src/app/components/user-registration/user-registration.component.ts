@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserService } from '../../shared/services/user.service';
+import { User } from '../../shared/interfaces/user';
 
 @Component({
   selector: 'app-user-registration',
@@ -15,6 +17,16 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
   styleUrl: './user-registration.component.css'
 })
 export class UserRegistrationComponent {
+    userService = inject(UserService)
+    emailErrorMessage = signal('')
+
+    registrationStatus: {
+        success: boolean,
+        message: string
+    } = {
+        success: false,
+        message: 'Not attempted yet'
+    }
     
     form = new FormGroup({
         username: new FormControl('', Validators.required),
@@ -45,6 +57,54 @@ export class UserRegistrationComponent {
     }
 
     onSubmit() {
-        const data = this.form.value
+        const data: User = {
+            'username': this.form.get('username')?.value || '',
+            'password': this.form.get('password')?.value || '',
+            'name': this.form.get('name')?.value || '',
+            'surname': this.form.get('surname')?.value || '',
+            'email': this.form.get('email')?.value || '',
+            'address': {
+                'area': this.form.get('area')?.value || '',
+                'road': this.form.get('road')?.value || ''
+            }
+        }
+        this.userService.registerUser(data).subscribe({
+            next: () => {
+                this.registrationStatus = {
+                    success: true,
+                    message: 'User registered'
+                }
+            },
+            error: (response) => {
+                this.registrationStatus = {
+                    success: false,
+                    message: response.data
+                }
+            }
+        })
+    }
+
+    check_duplicate_email() {
+        const email = this.form.get('email')?.value
+
+        if (email) {
+            this.userService.check_duplicate_email(email).subscribe({
+                next: () => {
+                    this.form.get('email')?.setErrors(null)
+                },
+                error: () => {
+                    this.form.get('email')?.setErrors({duplicateEmail: true})
+                }
+
+            })    
+        }
+    }
+
+    registerAnother() {
+        this.form.reset()
+        this.registrationStatus = {
+            success: false,
+            message: 'Not attempted yet'
+        }
     }
 }
