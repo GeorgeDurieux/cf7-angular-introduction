@@ -13,24 +13,26 @@ import { UserLoginComponent } from './components/user-login/user-login.component
 
 import { authGuard } from './shared/guards/auth.guard';
 import { adminRoleGuard } from './shared/guards/admin-role.guard';
+import { RestrictedContentComponent } from './components/restricted-content/restricted-content.component';
 
 export const routes: Routes = [
-    
-    {path: 'for-directive-example', component: ForDirectiveExampleComponent},
-    {path: 'component-input-example', component: ComponentInputExampleComponent},
-    {path: 'component-output-example', component: ComponentOutputExampleComponent},
-    {path: 'event-bind-example', component: EventBindExampleComponent},
-    {path: 'simple-datatable-example', component: SimpleDatatableExampleComponent},
-    {path: 'template-driven-form-example', component: TemplateDrivenFormExampleComponent },
-    {path: 'reactive-form-example', component: ReactiveFormExampleComponent },
-    {path: 'http-client-example', component: HttpClientExampleComponent },
-    {path: 'http-client-example', component: HttpClientExampleComponent },
+
+    { path: 'for-directive-example', component: ForDirectiveExampleComponent },
+    { path: 'component-input-example', component: ComponentInputExampleComponent },
+    { path: 'component-output-example', component: ComponentOutputExampleComponent },
+    { path: 'event-bind-example', component: EventBindExampleComponent },
+    { path: 'simple-datatable-example', component: SimpleDatatableExampleComponent },
+    { path: 'template-driven-form-example', component: TemplateDrivenFormExampleComponent },
+    { path: 'reactive-form-example', component: ReactiveFormExampleComponent },
+    { path: 'http-client-example', component: HttpClientExampleComponent },
+    { path: 'http-client-example', component: HttpClientExampleComponent },
     {
         path: 'user-registration-example',
         component: UserRegistrationComponent,
         canActivate: [authGuard, adminRoleGuard]
     },
-    {path: 'user-login', component: UserLoginComponent},
-    {path: 'welcome', component: WelcomeComponent },
-    {path: '', redirectTo: '/welcome', pathMatch: 'full'}
+    { path: 'user-login', component: UserLoginComponent },
+    { path: 'restricted-content', component: RestrictedContentComponent },
+    { path: 'welcome', component: WelcomeComponent },
+    { path: '', redirectTo: '/welcome', pathMatch: 'full' }
 ];

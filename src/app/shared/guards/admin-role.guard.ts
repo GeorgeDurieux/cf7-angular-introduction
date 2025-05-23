@@ -7,12 +7,11 @@ export const adminRoleGuard: CanActivateFn = (route, state) => {
     const router = inject(Router)
 
     const userRoles = userService.user$()?.roles
-    const hasPermission = userRoles.includes('ADMIN')
+    const hasPermission = userRoles?.includes('ADMIN')
 
     if (userService.user$() && hasPermission) {
         return true;
     } else {
-        return router.navigate(['user-login'])
-    }
-    
+        return router.navigate(['restricted-content'])
+    }    
 };
