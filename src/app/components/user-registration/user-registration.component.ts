@@ -2,9 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../shared/services/user.service';
 import { User } from '../../shared/interfaces/user';
+import { MatSelectModule} from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-user-registration',
@@ -12,7 +14,9 @@ import { User } from '../../shared/interfaces/user';
      MatButtonModule,
      MatFormFieldModule,
      MatInputModule,
-     ReactiveFormsModule],
+     ReactiveFormsModule,
+     MatSelectModule,
+     MatIconModule],
   templateUrl: './user-registration.component.html',
   styleUrl: './user-registration.component.css'
 })
@@ -36,6 +40,12 @@ export class UserRegistrationComponent {
             area: new FormControl(''),
             road: new FormControl('')
         }),
+        phone: new FormArray([
+            new FormGroup({
+                number: new FormControl('', Validators.required),
+                type: new FormControl('', Validators.required)
+            })
+        ]),
         password: new FormControl('', [Validators.required, Validators.minLength(4)]),
         confirmPassword: new FormControl('', [Validators.required, Validators.minLength(4)])
     },
@@ -55,18 +65,24 @@ export class UserRegistrationComponent {
         return null
     }
 
+    phone = this.form.get('phone') as FormArray
+
+    addPhoneNumber() {
+        this.phone.push(
+            new FormGroup({
+                number: new FormControl('', Validators.required),
+                type: new FormGroup('', Validators.required)
+            })
+        )
+    }
+
+    removePhoneNumber(index: number) {
+        this.phone.removeAt(index)
+    }
+
     onSubmit() {
-        const data: User = {
-            'username': this.form.get('username')?.value || '',
-            'password': this.form.get('password')?.value || '',
-            'name': this.form.get('name')?.value || '',
-            'surname': this.form.get('surname')?.value || '',
-            'email': this.form.get('email')?.value || '',
-            'address': {
-                'area': this.form.controls.address.controls.area?.value || '',
-                'road': this.form.controls.address.controls.road?.value || ''
-            }
-        }
+        const data = this.form.value as User
+        
         this.userService.registerUser(data).subscribe({
             next: () => {
                 this.registrationStatus = {
