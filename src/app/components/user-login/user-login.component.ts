@@ -27,6 +27,7 @@ export class UserLoginComponent {
 
     onSubmit() {
         const credentials = this.form.value as Credentials
+
         this.userService.loginUser(credentials).subscribe({
             next: (response) => {
                 console.log('Logged in: ', response)
@@ -34,6 +35,12 @@ export class UserLoginComponent {
                 localStorage.setItem('access_token', access_token)
 
                 const decodedTokenSubject = jwtDecode(access_token) as unknown as LoggedInUser
+
+                this.userService.user$.set({
+                    username: decodedTokenSubject.username,
+                    email: decodedTokenSubject.email,
+                    roles: decodedTokenSubject.roles
+                })
 
                 this.router.navigate(['user-registration-example'])
             },
